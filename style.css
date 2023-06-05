@@ -29,24 +29,29 @@ body {
 	align-items: center;
 	justify-content: center;
 	margin-top: 20px;
+	flex-wrap: wrap;
 }
 
 main {
 	flex: 0.7;
-	background-color: #3d4c8a;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	min-height: 80vh;
+	max-height: 100vh;
+	padding: 10px;
 }
 
 section {
-	border-radius: 10px;
+	border-radius: 15px;
 	margin-bottom: 10px;
 	padding: 20px;
+	flex-grow: 1;
 }
 
 #city-current {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 #city-current .info {
@@ -54,10 +59,12 @@ section {
 	display: flex;
 	flex-direction: column;
 	margin-left: 10px;
+	color: #202b3c;
 }
 
 .info .city-temp {
 	font-size: 50px;
+	margin: 30px 0 0 0;
 }
 
 #city-current .weather-icon {
@@ -78,13 +85,151 @@ section {
 }
 
 #today-forecast {
-	background-color: rgb(61, 17, 61);
+	background-color: #ebecf0;
+	display: flex;
+	flex-direction: column;
+}
+
+section h4 {
+	margin: 0;
+	font-size: 11px;
+	color: #959ba2;
+}
+
+#today-forecast .today-forecast-list {
+	margin: 0;
+	margin-top: 10px;
+	padding: 10px;
+	list-style-type: none;
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#today-forecast .today-forecast-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-right: 1px solid #ced3db;
+	flex-grow: 1;
+}
+
+#today-forecast .today-forecast-item:first-child {
+	padding-left: 0;
+}
+
+#today-forecast .today-forecast-item:last-child {
+	border: none;
+	padding-right: 0;
+}
+
+.today-forecast-item p {
+	margin: 0;
+}
+
+.today-forecast-item .today-forecast-time {
+	font-size: 13px;
+	font-weight: bold;
+	color: #959ba2;
+	margin: 0;
+}
+
+.today-forecast-item .today-forecast-temp {
+	font-size: 20px;
+	font-weight: bold;
+	color: #202b3c;
+}
+
+.today-forecast-item .today-weather-icon {
+	margin: 10px 0;
 }
 
 #air-conditions {
-
-	background-color: rgb(71, 9, 71);
+	background-color: #ebecf0;
 	margin-bottom: 0;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 0;
+}
+
+.air-info-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding: 0 15px;
+	flex-grow: 1;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.air-info {
+	margin-bottom: 15px;
+}
+
+.air-info span {
+	font-size: 16px;
+	font-weight: 400;
+	color: #a5a8b0;
+}
+
+.air-info .air-info-data {
+	font-size: 25px;
+	font-weight: bold;
+	margin: 10px 0 0 0;
+}
+
+.real-feel {
+	position: relative;
+}
+
+.real-feel::before {
+	font: var(--fa-font-solid);
+	content: "\f2c9";
+	position: absolute;
+	font-size: 20px;
+	margin-right: 5px;
+	right: 100%;
+}
+
+.wind {
+	position: relative;
+}
+
+.wind::before {
+	font: var(--fa-font-solid);
+	content: "\f72e";
+	position: absolute;
+	font-size: 20px;
+	margin-right: 5px;
+	right: 100%;
+}
+
+.rain-chance {
+	position: relative;
+}
+
+.rain-chance::before {
+	font: var(--fa-font-solid);
+	content: "\f73d";
+	position: absolute;
+	font-size: 20px;
+	margin-right: 5px;
+	right: 100%;
+}
+
+.uv {
+	position: relative;
+}
+
+.uv::before {
+	font: var(--fa-font-solid);
+	content: "\f185";
+	position: absolute;
+	font-size: 20px;
+	margin-right: 5px;
+	right: 100%;
 }
 
 aside {
