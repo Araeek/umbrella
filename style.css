@@ -70,8 +70,14 @@ section {
 #city-current .weather-icon {
 	flex: 1;
 	display: flex;
+  align-items: center;
 	justify-content: flex-end;
 	padding: 20px;
+}
+
+.weather-icon h3 {
+  margin-right: 30px;
+  font-size: 25px;
 }
 
 
@@ -240,6 +246,7 @@ aside {
 
 .seven-forecast {
 	display: flex;
+	flex-direction: column;
 	background-color: #ebecf0;
 	border-radius: 15px;
 	flex-grow: 1;
@@ -248,4 +255,60 @@ aside {
 
 aside h4 {
 	margin: 0;
+}
+
+#seven-forecast-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+  justify-content: stretch;
+	margin-top: 20px;
+  height: 100%;
+}
+
+.seven-forecast-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  border-bottom: 1px solid #ced3db;
+  flex-grow: 1;
+}
+
+.seven-forecast-item:first-child {
+  padding-top: 0;
+}
+
+.seven-forecast-item:last-child {
+  border: none;
+}
+
+.seven-forecast-weather {
+	display: flex;
+}
+
+.seven-forecast-day {
+	color: #aaadb3;
+  font-size: 14px;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.seven-forecast-weather {
+  flex-grow: 1;
+}
+
+.seven-forecast-weather img {
+  height: 100%;
+  margin-right: 10px;
+}
+
+.seven-forecast-weather p {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.high-low span {
+  font-weight: 600;
 }
