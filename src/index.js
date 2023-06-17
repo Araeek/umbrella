@@ -33,8 +33,9 @@ function updateHourlyForecast(hours, time) {
     // Today forecast time
     const forecastTime = document.createElement("h5");
     forecastTime.classList.add("today-forecast-time");
+    console.log(Math.round(i / 12));
     forecastTime.textContent = `${i % 12 === 0 ? "12" : i % 12}:00 ${
-      Math.round(i / 12) === 0 ? "AM" : "PM"
+      Math.ceil(i / 12) === 1 ? "AM" : "PM"
     }`;
     // Today forecast icon
     const forecastIcon = document.createElement("div");
@@ -68,7 +69,6 @@ function updateUV(uvIndex) {
   const uv = document.querySelector(".uv+.air-info-data");
   uv.textContent = uvIndex;
 }
-
 
 getForecastData("esfahan").then((data) => {
   const date = new Date();
