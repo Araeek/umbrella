@@ -1,4 +1,4 @@
-import { getForecastData } from "./api.js";
+import { getForecastData, getDailyForecastData } from "./api.js";
 
 function updateCityName(name) {
   const cityName = document.querySelector(".city-name");
@@ -13,6 +13,11 @@ function updateCityTemp(temp) {
 function updateCityCondition(cond) {
   const cityCondition = document.querySelector(".city-cond");
   cityCondition.textContent = cond;
+}
+
+function updateCityIcon(isday, code) {
+  const cityIcon = document.querySelector(".weather-icon img");
+  cityIcon.src = `assets/icons/${isday ? "day" : "night"}/${code}.png`;
 }
 
 function updateChanceOfRain(perc) {
@@ -33,7 +38,6 @@ function updateHourlyForecast(hours, time) {
     // Today forecast time
     const forecastTime = document.createElement("h5");
     forecastTime.classList.add("today-forecast-time");
-    console.log(Math.round(i / 12));
     forecastTime.textContent = `${i % 12 === 0 ? "12" : i % 12}:00 ${
       Math.ceil(i / 12) === 1 ? "AM" : "PM"
     }`;
@@ -41,7 +45,9 @@ function updateHourlyForecast(hours, time) {
     const forecastIcon = document.createElement("div");
     forecastIcon.classList.add("today-weather-icon");
     const forecastIconImg = document.createElement("img");
-    forecastIconImg.src = "https://img.icons8.com/fluency/48/summer.png";
+    forecastIconImg.src = `assets/icons/${
+      hours[i]["is_day"] ? "day" : "night"
+    }/${hours[i]["condition"]["code"]}.png`;
     forecastIcon.append(forecastIconImg);
     //Today forecast temp
     const forecastTemp = document.createElement("p");
@@ -70,11 +76,68 @@ function updateUV(uvIndex) {
   uv.textContent = uvIndex;
 }
 
+function updateDailyForecast(days) {
+  const dayForecastList = document.querySelector("#seven-forecast-list");
+  for (let i = 0; i < 7; i++) {
+    const dayForecastItem = document.createElement("li");
+    dayForecastItem.classList.add("seven-forecast-item");
+    //day forecast day
+    const dayForecastDay = document.createElement("span");
+    dayForecastDay.classList.add("seven-forecast-day");
+    const WEEKDAYS = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    dayForecastDay.textContent = `${
+      i === 0 ? "Today" : WEEKDAYS[new Date(days[i]["datetime"]).getDay()]
+    }`;
+    //day forecast icon
+    const dayForecastIcon = document.createElement("div");
+    dayForecastIcon.classList.add("seven-forecast-weather");
+    const dayForecastIconImg = document.createElement("img");
+    const ICONS_CODE = {
+      "snow": 1225,
+      "rain": 1189,
+      "fog": 1030,
+      "wind": 1542,
+      "cloudy": 1006,
+      "partly-cloudy-day": 1003,
+      "partly-cloudy-night": 1003,
+      "clear-day": 1000,
+      "clear-night": 1000
+    }
+    dayForecastIconImg.src = `assets/icons/day/${ICONS_CODE[days[i]["icon"]]}.png`;
+    const dayForecastText = document.createElement("p");
+    dayForecastText.textContent = days[i]["conditions"];
+    dayForecastIcon.append(dayForecastIconImg);
+    dayForecastIcon.append(dayForecastText);
+    //day forecast highlow
+    const dayHighlow = document.createElement("p");
+    dayHighlow.classList.add("high-low");
+    const low = document.createElement("span");
+    low.textContent = Math.round(days[i]["tempmax"]);
+    dayHighlow.append(low);
+    dayHighlow.append(`/${Math.round(days[i]["tempmin"])}`);
+    //appending all
+    dayForecastItem.append(dayForecastDay);
+    dayForecastItem.append(dayForecastIcon);
+    dayForecastItem.append(dayHighlow);
+    dayForecastList.append(dayForecastItem);
+  }
+}
+
 getForecastData("esfahan").then((data) => {
   const date = new Date();
+  console.log(date.getDay());
   updateCityName(data.location.name);
   updateCityTemp(data.current["temp_c"]);
   updateCityCondition(data.current.condition.text);
+  updateCityIcon(data.current["is_day"], data.current.condition.code);
   updateFeel(data.current.feelslike_c);
   updateWind(data.current.wind_kph);
   updateChanceOfRain(
@@ -82,4 +145,8 @@ getForecastData("esfahan").then((data) => {
   );
   updateHourlyForecast(data.forecast.forecastday["0"]["hour"], date.getHours());
   updateUV(data.current.uv);
+});
+
+getDailyForecastData("esfahan").then((data) => {
+  updateDailyForecast(data["days"]);
 });
