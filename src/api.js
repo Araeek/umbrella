@@ -7,7 +7,28 @@ async function getForecastData(city) {
       }
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+const headers = new Headers({
+  'X-Api-Key': "09tYeXCwhiKsMjQY6ME1Rw==sEbRPFDVhcuP3U1R",
+  'Content-Type': 'application/json',
+});
+async function getSearchData(city) {
+  try {
+    const response = await fetch(
+      `https://api.api-ninjas.com/v1/city?name=${city}&limit=10`,
+      {
+        mode: "cors",
+        method: 'GET',
+        headers: headers
+      }
+    );
+    const data = await response.json();
     return data;
   } catch (err) {
     console.log(err.message);
@@ -23,11 +44,11 @@ async function getDailyForecastData(city) {
       }
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (err) {
     console.log(err.message);
   }
 }
 
-export { getForecastData, getDailyForecastData };
+export { getForecastData, getDailyForecastData, getSearchData };

@@ -16,7 +16,10 @@
 <body>
 	<div class="container">
 		<form action="">
-			<input type="search" name="city-search" id="city-search" placeholder="Search for cities">
+			<div id="city-search-container">
+				<input type="search" name="city-search" id="city-search" placeholder="Search for cities">
+				<div id="autocomplete-container"></div>
+			</div>
 		</form>
 		<div class="wrapper">
 			<main>
@@ -34,7 +37,7 @@
 				<section id="today-forecast">
 					<h4>TODAY'S FORECAST</h4>
 					<ul class="today-forecast-list">
-						
+
 					</ul>
 				</section>
 				<section id="air-conditions">

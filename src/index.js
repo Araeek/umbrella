@@ -1,4 +1,4 @@
-import { getForecastData, getDailyForecastData } from "./api.js";
+import { getForecastData, getDailyForecastData, getSearchData } from "./api.js";
 
 function updateCityName(name) {
   const cityName = document.querySelector(".city-name");
@@ -150,3 +150,49 @@ getForecastData("esfahan").then((data) => {
 getDailyForecastData("esfahan").then((data) => {
   updateDailyForecast(data["days"]);
 });
+
+const citySearch = document.getElementById('city-search');
+const autocompleteContainer = document.getElementById('autocomplete-container');
+const autocompleteOptions = [
+  'New York',
+  'Los Angeles',
+  'Chicago',
+  'Houston',
+  'Miami',
+  // Add more options as needed
+];
+
+citySearch.addEventListener('input', () => {
+  const userInput = citySearch.value.toLowerCase();
+  const matchingOptions = autocompleteOptions.filter(option =>
+    option.toLowerCase().includes(userInput)
+  );
+
+  // Clear previous options
+  autocompleteContainer.innerHTML = '';
+
+  // Display matching options in the container
+  matchingOptions.forEach(option => {
+    const optionElement = document.createElement('div');
+    optionElement.textContent = option;
+
+    optionElement.addEventListener('click', () => {
+      // When an option is clicked, fill the input field with the selected option
+      citySearch.value = option;
+      // Hide the autocomplete container
+      autocompleteContainer.style.display = 'none';
+    });
+
+    autocompleteContainer.appendChild(optionElement);
+  });
+
+  // Show/hide the autocomplete container based on matching options
+  if (matchingOptions.length > 0) {
+    autocompleteContainer.style.display = 'block';
+  } else {
+    autocompleteContainer.style.display = 'none';
+  }
+});
+// getSearchData("san").then((data) => {
+//   console.log(data)
+// });

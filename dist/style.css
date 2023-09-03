@@ -9,6 +9,13 @@ body {
 	height: 90vh;
 }
 
+#cith-search-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 #city-search {
 	border: none;
 	outline: none;
@@ -22,7 +29,16 @@ body {
 	border-radius: 10px;
 	padding: 10px;
 	width: 100%;
+	position: relative;
 }
+
+#autocomplete-container {
+	position: absolute;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-top: none;
+	display: none; /* Initially hidden */
+  }
 
 .wrapper {
 	display: flex;
