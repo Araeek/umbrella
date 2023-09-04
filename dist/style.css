@@ -9,11 +9,11 @@ body {
 	height: 90vh;
 }
 
-#cith-search-container {
+#city-search-container {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	align-items: stretch;
 	justify-content: center;
+	position: relative;
 }
 
 #city-search {
@@ -29,16 +29,37 @@ body {
 	border-radius: 10px;
 	padding: 10px;
 	width: 100%;
-	position: relative;
+}
+
+.search-button {
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	width: 3%;
+	padding: 10px;
+	margin-left: 5px;
+	cursor: pointer;
 }
 
 #autocomplete-container {
 	position: absolute;
-	background-color: #fff;
-	border: 1px solid #ccc;
+	background-color: rgb(254, 254, 254);
 	border-top: none;
-	display: none; /* Initially hidden */
-  }
+	height: fit-content;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 0 0 10px 10px;
+	display: none;
+	position: absolute;
+	width: 100%;
+	top: 100%;
+	left: 0;
+}
+
+.autocomplete-item {
+	margin-bottom: 4px;
+	cursor: pointer;
+}
 
 .wrapper {
 	display: flex;
@@ -86,7 +107,7 @@ section {
 #city-current .weather-icon {
 	flex: 1;
 	display: flex;
-  align-items: center;
+	align-items: center;
 	justify-content: flex-end;
 	padding: 20px;
 }
@@ -96,8 +117,8 @@ section {
 }
 
 .weather-icon h3 {
-  margin-right: 30px;
-  font-size: 25px;
+	margin-right: 30px;
+	font-size: 25px;
 }
 
 
@@ -283,25 +304,25 @@ aside h4 {
 	list-style-type: none;
 	display: flex;
 	flex-direction: column;
-  justify-content: stretch;
+	justify-content: stretch;
 	margin-top: 20px;
-  height: 100%;
+	height: 100%;
 }
 
 .seven-forecast-item {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-  border-bottom: 1px solid #ced3db;
-  flex-grow: 1;
+	border-bottom: 1px solid #ced3db;
+	flex-grow: 1;
 }
 
 .seven-forecast-item:first-child {
-  padding-top: 0;
+	padding-top: 0;
 }
 
 .seven-forecast-item:last-child {
-  border: none;
+	border: none;
 }
 
 .seven-forecast-weather {
@@ -310,25 +331,25 @@ aside h4 {
 
 .seven-forecast-day {
 	color: #aaadb3;
-  font-size: 14px;
-  font-weight: 500;
-  width: 30%;
+	font-size: 14px;
+	font-weight: 500;
+	width: 30%;
 }
 
-.seven-forecast-weather {	
+.seven-forecast-weather {
 	width: 40%;
 }
 
 .seven-forecast-weather img {
-  height: 100%;
-  margin-right: 10px;
+	height: 100%;
+	margin-right: 10px;
 }
 
 .seven-forecast-weather p {
-  font-weight: 600;
-  font-size: 15px;
+	font-weight: 600;
+	font-size: 15px;
 }
 
 .high-low span {
-  font-weight: 600;
+	font-weight: 600;
 }
