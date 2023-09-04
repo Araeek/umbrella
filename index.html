@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@200;400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./style.css">
+	<title>Umbrella</title>
+</head>
+
+<body>
+	<div class="container">
+		<form action="">
+			<div id="city-search-container">
+				<input type="search" name="city-search" id="city-search" placeholder="Search for cities">
+				<button class="search-button">S</button>
+				<div id="autocomplete-container"></div>
+			</div>
+		</form>
+		<div class="wrapper">
+			<main>
+				<section id="city-current">
+					<div class="info">
+						<h1 class="city-name"></h1>
+						<p class="chance-of-rain">Chance of rain : <span></span>%</p>
+						<h2 class="city-temp"></h2>
+					</div>
+					<div class="weather-icon">
+						<h3 class="city-cond"></h3>
+						<img src="" alt="" />
+					</div>
+				</section>
+				<section id="today-forecast">
+					<h4>TODAY'S FORECAST</h4>
+					<ul class="today-forecast-list">
+
+					</ul>
+				</section>
+				<section id="air-conditions">
+					<h4>AIR CONDITIONS</h4>
+					<div class="air-info-container">
+						<div class="air-info">
+							<span class="real-feel">Real Feel</span>
+							<p class="air-info-data"></p>
+						</div>
+						<div class="air-info">
+							<span class="wind">Wind</span>
+							<p class="air-info-data"></p>
+						</div>
+						<div class="air-info">
+							<span class="rain-chance">Chance of rain</span>
+							<p class="air-info-data"></p>
+						</div>
+						<div class="air-info">
+							<span class="uv">UV Index</span>
+							<p class="air-info-data"></p>
+						</div>
+					</div>
+				</section>
+			</main>
+			<aside>
+				<section class="seven-forecast">
+					<h4>7-DAY FORECAST</h4>
+					<ul id="seven-forecast-list">
+					</ul>
+				</section>
+			</aside>
+		</div>
+	</div>
+	<script src="https://kit.fontawesome.com/94c32bd062.js" crossorigin="anonymous"></script>
+	<script src="bundle.js"></script>
+</body>
+
+</html>
