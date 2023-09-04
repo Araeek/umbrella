@@ -174,6 +174,7 @@ citySearch.addEventListener('input', () => {
   // Display matching options in the container
   matchingOptions.forEach(option => {
     const optionElement = document.createElement('div');
+    optionElement.classList.add("autocomplete-item")
     optionElement.textContent = option;
 
     optionElement.addEventListener('click', () => {
