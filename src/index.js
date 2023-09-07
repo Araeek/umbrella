@@ -133,7 +133,6 @@ function updateDailyForecast(days) {
 
 getForecastData("esfahan").then((data) => {
   const date = new Date();
-  console.log(date.getDay());
   updateCityName(data.location.name);
   updateCityTemp(data.current["temp_c"]);
   updateCityCondition(data.current.condition.text);
