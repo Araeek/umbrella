@@ -101,17 +101,19 @@ function updateDailyForecast(days) {
     dayForecastIcon.classList.add("seven-forecast-weather");
     const dayForecastIconImg = document.createElement("img");
     const ICONS_CODE = {
-      "snow": 1225,
-      "rain": 1189,
-      "fog": 1030,
-      "wind": 1542,
-      "cloudy": 1006,
+      snow: 1225,
+      rain: 1189,
+      fog: 1030,
+      wind: 1542,
+      cloudy: 1006,
       "partly-cloudy-day": 1003,
       "partly-cloudy-night": 1003,
       "clear-day": 1000,
-      "clear-night": 1000
-    }
-    dayForecastIconImg.src = `assets/icons/day/${ICONS_CODE[days[i]["icon"]]}.png`;
+      "clear-night": 1000,
+    };
+    dayForecastIconImg.src = `assets/icons/day/${
+      ICONS_CODE[days[i]["icon"]]
+    }.png`;
     const dayForecastText = document.createElement("p");
     dayForecastText.textContent = days[i]["conditions"];
     dayForecastIcon.append(dayForecastIconImg);
@@ -150,49 +152,54 @@ getDailyForecastData("esfahan").then((data) => {
   updateDailyForecast(data["days"]);
 });
 
-const citySearch = document.getElementById('city-search');
-const autocompleteContainer = document.getElementById('autocomplete-container');
-const autocompleteOptions = [
-  'New York',
-  'Los Angeles',
-  'Chicago',
-  'Houston',
-  'Miami',
-  // Add more options as needed
-];
+const cityList = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
 
-citySearch.addEventListener('input', () => {
-  const userInput = citySearch.value.toLowerCase();
-  const matchingOptions = autocompleteOptions.filter(option =>
-    option.toLowerCase().includes(userInput)
-  );
+// Get the modal and the close button
+const searchResult = document.getElementById("search-result");
+const closeButton = document.getElementsByClassName("close")[0];
 
-  // Clear previous options
-  autocompleteContainer.innerHTML = '';
+// Get the search button and the form
+const searchButton = document.querySelector(".search-button");
+const searchBarForm = document.getElementById("search-bar");
+const resultList = document.getElementById("result-list");
 
-  // Display matching options in the container
-  matchingOptions.forEach(option => {
-    const optionElement = document.createElement('div');
-    optionElement.classList.add("autocomplete-item")
-    optionElement.textContent = option;
+// Function to display the modal
+function showResult() {
+  searchResult.style.display = "block";
+}
 
-    optionElement.addEventListener('click', () => {
-      // When an option is clicked, fill the input field with the selected option
-      citySearch.value = option;
-      // Hide the autocomplete container
-      autocompleteContainer.style.display = 'none';
-    });
+// Function to hide the modal
+function closeModal() {
+  searchResult.style.display = "none";
+}
 
-    autocompleteContainer.appendChild(optionElement);
-  });
+// Event listener for the search button
+searchButton.addEventListener("click", function (e) {
+  e.preventDefault(); // Prevent form submission
+  // cityList.forEach((city) => {
+  //   const cityItem = document.createElement("li");
+  //   cityItem.classList.add("city-item");
+  //   cityItem.textContent = city;
+  //   resultList.append(cityItem);
+  // });
+  // Show the modal
+  showResult();
+});
 
-  // Show/hide the autocomplete container based on matching options
-  if (matchingOptions.length > 0) {
-    autocompleteContainer.style.display = 'block';
-  } else {
-    autocompleteContainer.style.display = 'none';
+// Event listener for the form submission
+searchBarForm.addEventListener("submit", function (e) {
+  e.preventDefault(); // Prevent form submission
+
+  // Show the modal
+  showResult();
+});
+
+// Event listener to close the modal when the close button is clicked
+closeButton.addEventListener("click", closeModal);
+
+// Event listener to close the modal when clicking outside the modal
+window.addEventListener("click", function (e) {
+  if (e.target === searchResult) {
+    closeModal();
   }
 });
-// getSearchData("san").then((data) => {
-//   console.log(data)
-// });
