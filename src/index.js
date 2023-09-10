@@ -152,19 +152,19 @@ getDailyForecastData("esfahan").then((data) => {
   updateDailyForecast(data["days"]);
 });
 
-const cityList = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
+const cityList = [];
 
 // Get the modal and the close button
 const searchResult = document.getElementById("search-result");
 const closeButton = document.getElementsByClassName("close")[0];
 
-// Get the search button and the form
-const searchButton = document.querySelector(".search-button");
+// Get the form
 const searchBarForm = document.getElementById("search-bar");
 const resultList = document.getElementById("result-list");
 
 // Function to display the modal
 function showResult() {
+  resultList.innerHTML = ""
   searchResult.style.display = "block";
 }
 
@@ -173,23 +173,27 @@ function closeModal() {
   searchResult.style.display = "none";
 }
 
-// Event listener for the search button
-searchButton.addEventListener("click", function (e) {
-  e.preventDefault(); // Prevent form submission
-  // cityList.forEach((city) => {
-  //   const cityItem = document.createElement("li");
-  //   cityItem.classList.add("city-item");
-  //   cityItem.textContent = city;
-  //   resultList.append(cityItem);
-  // });
-  // Show the modal
-  showResult();
-});
+function renderSearchResults(query) {
+  getSearchData(query).then((data) => {
+    data.forEach((city) => {
+      const cityItem = document.createElement("li");
+      const cityName = document.createElement("p");
+      const citySetButton = document.createElement("button");
+      cityItem.classList.add("city-item");
+      cityName.textContent = `${city.name}, ${city.country}`;
+      citySetButton.textContent = "Set";
+      cityItem.append(cityName);
+      cityItem.append(citySetButton);
+      resultList.append(cityItem);
+    });
+  });
+}
 
 // Event listener for the form submission
 searchBarForm.addEventListener("submit", function (e) {
   e.preventDefault(); // Prevent form submission
-
+  const inputValue = document.getElementById("city-search").value;
+  renderSearchResults(inputValue);
   // Show the modal
   showResult();
 });
