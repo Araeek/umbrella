@@ -29,6 +29,7 @@ function updateChanceOfRain(perc) {
 
 function updateHourlyForecast(hours, time) {
   const forecastList = document.querySelector(".today-forecast-list");
+  forecastList.innerHTML = "";
   for (let i = time + 1; i < time + 7; i++) {
     if (i === 24) {
       i = 0;
@@ -78,6 +79,7 @@ function updateUV(uvIndex) {
 
 function updateDailyForecast(days) {
   const dayForecastList = document.querySelector("#seven-forecast-list");
+  dayForecastList.innerHTML = "";
   for (let i = 0; i < 7; i++) {
     const dayForecastItem = document.createElement("li");
     dayForecastItem.classList.add("seven-forecast-item");
@@ -133,27 +135,6 @@ function updateDailyForecast(days) {
   }
 }
 
-getForecastData("esfahan").then((data) => {
-  const date = new Date();
-  updateCityName(data.location.name);
-  updateCityTemp(data.current["temp_c"]);
-  updateCityCondition(data.current.condition.text);
-  updateCityIcon(data.current["is_day"], data.current.condition.code);
-  updateFeel(data.current.feelslike_c);
-  updateWind(data.current.wind_kph);
-  updateChanceOfRain(
-    data.forecast.forecastday["0"]["hour"][date.getHours()]["chance_of_rain"]
-  );
-  updateHourlyForecast(data.forecast.forecastday["0"]["hour"], date.getHours());
-  updateUV(data.current.uv);
-});
-
-getDailyForecastData("esfahan").then((data) => {
-  updateDailyForecast(data["days"]);
-});
-
-const cityList = [];
-
 // Get the modal and the close button
 const searchResult = document.getElementById("search-result");
 const closeButton = document.getElementsByClassName("close")[0];
@@ -164,7 +145,7 @@ const resultList = document.getElementById("result-list");
 
 // Function to display the modal
 function showResult() {
-  resultList.innerHTML = ""
+  resultList.innerHTML = "";
   searchResult.style.display = "block";
 }
 
@@ -175,13 +156,24 @@ function closeModal() {
 
 function renderSearchResults(query) {
   getSearchData(query).then((data) => {
+    if (data.length === 0) {
+      const noCity = document.createElement("p");
+      noCity.classList.add("no-result");
+      noCity.textContent = "No city found! Try again!";
+      resultList.append(noCity);
+    }
     data.forEach((city) => {
       const cityItem = document.createElement("li");
       const cityName = document.createElement("p");
       const citySetButton = document.createElement("button");
       cityItem.classList.add("city-item");
+      cityItem.dataset.city = city.name;
       cityName.textContent = `${city.name}, ${city.country}`;
       citySetButton.textContent = "Set";
+      citySetButton.addEventListener("click", (e) => {
+        init(e.target.parentNode.dataset.city);
+        closeModal();
+      });
       cityItem.append(cityName);
       cityItem.append(citySetButton);
       resultList.append(cityItem);
@@ -207,3 +199,32 @@ window.addEventListener("click", function (e) {
     closeModal();
   }
 });
+
+function init(city = "esfahan") {
+  getForecastData(city).then((data) => {
+    console.log(data.location.localtime.split(" ")[1].split(":")[0]);
+    console.log(data.forecast.forecastday["0"]["hour"]);
+    updateCityName(data.location.name);
+    updateCityTemp(data.current["temp_c"]);
+    updateCityCondition(data.current.condition.text);
+    updateCityIcon(data.current["is_day"], data.current.condition.code);
+    updateFeel(data.current.feelslike_c);
+    updateWind(data.current.wind_kph);
+    updateChanceOfRain(
+      data.forecast.forecastday["0"]["hour"][
+        data.location.localtime.split(" ")[1].split(":")[0]
+      ]["chance_of_rain"]
+    );
+    updateUV(data.current.uv);
+    updateHourlyForecast(
+      data.forecast.forecastday["0"]["hour"],
+      data.location.localtime.split(" ")[1].split(":")[0]
+    );
+  });
+
+  getDailyForecastData(city).then((data) => {
+    updateDailyForecast(data["days"]);
+  });
+}
+
+init();
