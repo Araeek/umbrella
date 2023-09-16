@@ -120,6 +120,11 @@ body {
 	gap: 20px;
 }
 
+.no-result {
+	font-size: 18px;
+	font-weight: 600;
+}
+
 .city-item {
 	display: flex;
 	justify-content: space-between;
