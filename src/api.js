@@ -7,7 +7,6 @@ async function getForecastData(city) {
       }
     );
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err.message);
@@ -44,7 +43,6 @@ async function getDailyForecastData(city) {
       }
     );
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err.message);

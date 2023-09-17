@@ -1,8 +1,8 @@
 import { getForecastData, getDailyForecastData, getSearchData } from "./api.js";
 
-function updateCityName(name) {
+function updateCityName(name, country) {
   const cityName = document.querySelector(".city-name");
-  cityName.textContent = name;
+  cityName.textContent = `${name}, ${country}`;
 }
 
 function updateCityTemp(temp) {
@@ -156,6 +156,7 @@ function closeModal() {
 
 function renderSearchResults(query) {
   getSearchData(query).then((data) => {
+    console.log(data);
     if (data.length === 0) {
       const noCity = document.createElement("p");
       noCity.classList.add("no-result");
@@ -167,11 +168,11 @@ function renderSearchResults(query) {
       const cityName = document.createElement("p");
       const citySetButton = document.createElement("button");
       cityItem.classList.add("city-item");
-      cityItem.dataset.city = city.name;
+      cityItem.dataset.latlong = `${city.latitude},${city.longitude}`;
       cityName.textContent = `${city.name}, ${city.country}`;
       citySetButton.textContent = "Set";
       citySetButton.addEventListener("click", (e) => {
-        init(e.target.parentNode.dataset.city);
+        init(e.target.parentNode.dataset.latlong);
         closeModal();
       });
       cityItem.append(cityName);
@@ -200,11 +201,9 @@ window.addEventListener("click", function (e) {
   }
 });
 
-function init(city = "esfahan") {
+function init(city = "london") {
   getForecastData(city).then((data) => {
-    console.log(data.location.localtime.split(" ")[1].split(":")[0]);
-    console.log(data.forecast.forecastday["0"]["hour"]);
-    updateCityName(data.location.name);
+    updateCityName(data.location.name, data.location.country);
     updateCityTemp(data.current["temp_c"]);
     updateCityCondition(data.current.condition.text);
     updateCityIcon(data.current["is_day"], data.current.condition.code);
@@ -218,7 +217,7 @@ function init(city = "esfahan") {
     updateUV(data.current.uv);
     updateHourlyForecast(
       data.forecast.forecastday["0"]["hour"],
-      data.location.localtime.split(" ")[1].split(":")[0]
+      +data.location.localtime.split(" ")[1].split(":")[0]
     );
   });
 
